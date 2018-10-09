@@ -27,6 +27,30 @@ app.get('/api/v1/makes', (request, response) => {
     });
 });
 
+app.post('/api/v1/makes', (request, response) => {
+  const { make_name, manufacturer } = request.body;
+  const make = {
+    make_name,
+    manufacturer
+  };
+
+  for (let requiredParameter of ['make_name', 'manufacturer']) {
+    if (!make[requiredParameter]) {
+      return response
+        .status(422)
+        .send({ error: `Expected fromat: { make_name: <String>, manufacturer: <String> }. You're missing a '${requiredParameter}' property.` });
+    }
+  }
+
+  database('makes').insert(make, 'id')
+    .then(make => {
+      response.status(201).json({ id: make[0] })
+    })
+    .catch(error => {
+      response.status(500).json({ error })
+    })
+});
+
 app.get('/api/v1/models', (request, response) => {
   database('models').select()
     .then((models) => {
