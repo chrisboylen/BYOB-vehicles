@@ -1,6 +1,8 @@
 const express = require('express');
+
 const app = express();
 const bodyParser = require('body-parser');
+
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
@@ -12,7 +14,7 @@ app.set('port', process.env.PORT || 3000);
 app.locals.title = 'BYOB Vehicles';
 
 app.get('/', (request, response) => {
-  response.send('Server working')
+  response.send('Server working');
 });
 
 app.listen(app.get('port'), () => {
