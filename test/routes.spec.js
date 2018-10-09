@@ -1,8 +1,8 @@
 const chai = require('chai');
-
-const should = chai.should();
 const chaiHttp = require('chai-http');
 const server = require('../server');
+
+const should = chai.should();
 
 chai.use(chaiHttp);
 
@@ -14,7 +14,7 @@ describe('API ROUTES', () => {
         response.should.have.status(200);
         response.should.be.json;
         response.body.should.be.a('array');
-        response.body.length.should.equal(3);
+        response.body.length.should.equal(4);
         response.body[0].should.have.property('make_name');
         response.body[0].make_name.should.equal('ferrari');
         response.body[0].should.have.property('manufacturer');
@@ -25,9 +25,24 @@ describe('API ROUTES', () => {
         response.body[0].updated_at.should.equal('2018-10-09T14:35:15.492Z');
         done();
       });
+
+    it('POST /api/v1/makes HAPPY', (done) => {
+      chai.request(server)
+        .post('/api/v1/makes')
+        .send({
+          make_name: 'Cadillac',
+          manufacturer: 'GMC',
+        })
+        .end((err, response) => {
+          response.should.have.status(201);
+          response.should.be.json;
+          response.body.should.have.property('id');
+          done();
+        });
+    });
   });
 
-  it('/api/v1/models should return all makes', (done) => {
+  it('/api/v1/models should return all models', (done) => {
     chai.request(server)
       .get('/api/v1/models')
       .end((err, response) => {
