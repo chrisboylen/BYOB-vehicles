@@ -38,4 +38,14 @@ describe('CLIENTS ROUTES', () => {
         done();
       });
   });
+
+  it('GET / SAD PATH', (done) => {
+    chai.request(server)
+      .get('/SADPATH')
+      .end((err, response) => {
+        response.should.have.status(404);
+        response.should.be.html;
+        done();
+      });
+  });
 });
