@@ -29,5 +29,13 @@ describe('API ROUTES', () => {
 });
 
 describe('CLIENTS ROUTES', () => {
-
+  it('GET / HAPPY PATH', (done) => {
+    chai.request(server)
+      .get('/')
+      .end((err, response) => {
+        response.should.have.status(200);
+        response.should.be.html;
+        done();
+      });
+  });
 });
