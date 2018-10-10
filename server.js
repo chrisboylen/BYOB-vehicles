@@ -38,7 +38,7 @@ app.post('/api/v1/makes', (request, response) => {
     if (!make[requiredParameter]) {
       return response
         .status(422)
-        .send({ error: `Expected fromat: { make_name: <String>, manufacturer: <String> }. You're missing a '${requiredParameter}' property.` });
+        .send({ error: `Expected format: { make_name: <String>, manufacturer: <String> }. You're missing a '${requiredParameter}' property.` });
     }
   }
 
@@ -57,6 +57,43 @@ app.get('/api/v1/models', (request, response) => {
       response.status(200).json(models);
     })
     .catch((error) => {
+      response.status(500).json({ error });
+    });
+});
+
+app.post('/api/v1/models', (request, response) => {
+  const { 
+    model_name, 
+    body,
+    engine, 
+    top_speed, 
+    horse_power, 
+    transmission, 
+    make_id 
+  } = request.body;
+  const model = {
+    model_name,
+    body,
+    engine,
+    top_speed,
+    horse_power,
+    transmission,
+    make_id
+  };
+
+  for (let requiredParameter of ['model_name', 'body', 'engine', 'top_speed', 'horse_power', 'transmission', 'make_id']) {
+    if (!model[requiredParameter]) {
+      return response 
+        .status(422)
+        .send({ error: `Expected format: { model_name: <String>, body: <String>, engine: <String>, top_speed: <Integer>, horse_power: <Integer>, transmission: <String>, make_id: <Integer> }. You're missing a '${requiredParameter}' property.` });
+    }
+  }
+
+  database('models').insert(model, 'id')
+    .then(model => {
+      response.status(201).json(model);
+    })
+    .catch(error => {
       response.status(500).json({ error });
     });
 });
