@@ -27,6 +27,18 @@ app.get('/api/v1/makes', (request, response) => {
     });
 });
 
+app.get('/api/v1/models', (request, response) => {
+  database('models').select()
+    .then((models) => {
+      response.status(200).json(models);
+    })
+    .catch((error) => {
+      response.status(500).json({
+        error,
+      });
+    });
+});
+
 app.post('/api/v1/makes', (request, response) => {
   const { make_name, manufacturer } = request.body;
   const make = {
@@ -47,29 +59,19 @@ app.post('/api/v1/makes', (request, response) => {
       response.status(201).json({ id: make[0] });
     })
     .catch((error) => {
-      response.status(500).json({ error });
-    });
-});
-
-app.get('/api/v1/models', (request, response) => {
-  database('models').select()
-    .then((models) => {
-      response.status(200).json(models);
-    })
-    .catch((error) => {
-      response.status(500).json({ error });
+      response.status(500).json({ error: 'Internal server error!' });
     });
 });
 
 app.post('/api/v1/models', (request, response) => {
-  const { 
-    model_name, 
+  const {
+    model_name,
     body,
-    engine, 
-    top_speed, 
-    horse_power, 
-    transmission, 
-    make_id 
+    engine,
+    top_speed,
+    horse_power,
+    transmission,
+    make_id,
   } = request.body;
   const model = {
     model_name,
@@ -78,23 +80,23 @@ app.post('/api/v1/models', (request, response) => {
     top_speed,
     horse_power,
     transmission,
-    make_id
+    make_id,
   };
 
-  for (let requiredParameter of ['model_name', 'body', 'engine', 'top_speed', 'horse_power', 'transmission', 'make_id']) {
+  for (const requiredParameter of ['model_name', 'body', 'engine', 'top_speed', 'horse_power', 'transmission', 'make_id']) {
     if (!model[requiredParameter]) {
-      return response 
+      return response
         .status(422)
         .send({ error: `Expected format: { model_name: <String>, body: <String>, engine: <String>, top_speed: <Integer>, horse_power: <Integer>, transmission: <String>, make_id: <Integer> }. You're missing a '${requiredParameter}' property.` });
     }
   }
 
   database('models').insert(model, 'id')
-    .then(model => {
-      response.status(201).json(model);
+    .then((model) => {
+      response.status(201).json({ id: model[0] });
     })
-    .catch(error => {
-      response.status(500).json({ error });
+    .catch((error) => {
+      response.status(500).json({ error: 'Internal server error!' });
     });
 });
 
@@ -102,4 +104,4 @@ app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`);
 });
 
-module.exports = app;
+module.exports = { app, database };
