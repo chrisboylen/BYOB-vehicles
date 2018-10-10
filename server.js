@@ -31,10 +31,10 @@ app.post('/api/v1/makes', (request, response) => {
   const { make_name, manufacturer } = request.body;
   const make = {
     make_name,
-    manufacturer
+    manufacturer,
   };
 
-  for (let requiredParameter of ['make_name', 'manufacturer']) {
+  for (const requiredParameter of ['make_name', 'manufacturer']) {
     if (!make[requiredParameter]) {
       return response
         .status(422)
@@ -43,12 +43,12 @@ app.post('/api/v1/makes', (request, response) => {
   }
 
   database('makes').insert(make, 'id')
-    .then(make => {
-      response.status(201).json({ id: make[0] })
+    .then((make) => {
+      response.status(201).json({ id: make[0] });
     })
-    .catch(error => {
-      response.status(500).json({ error })
-    })
+    .catch((error) => {
+      response.status(500).json({ error });
+    });
 });
 
 app.get('/api/v1/models', (request, response) => {
