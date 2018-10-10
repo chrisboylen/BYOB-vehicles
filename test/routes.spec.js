@@ -33,6 +33,7 @@ describe('API ROUTES', () => {
         response.body[0].manufacturer.should.equal('ferrari');
         done();
       });
+    });
 
     it('POST /api/v1/makes HAPPY', (done) => {
       chai.request(server)
