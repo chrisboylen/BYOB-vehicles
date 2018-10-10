@@ -45,8 +45,8 @@ module.exports = {
   },
 
   test: {
-    client: 'postgresql',
-    connection: 'postgres://localhost/byob_vehicles',
+    client: 'pg',
+    connection: 'postgres://localhost/byob_vehicles_test',
     migrations: {
       directory: './db/migrations',
     },
