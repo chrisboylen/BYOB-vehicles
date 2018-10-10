@@ -1,10 +1,22 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../server');
+const knex = require('../db/knex');
 
 const should = chai.should();
 
 chai.use(chaiHttp);
+
+beforeEach((done) => {
+  knex.migrate.rollback()
+    .then(() => {
+      knex.migrate.latest()
+        .then(() => knex.seed.run()
+          .then(() => {
+            done();
+          }));
+    });
+});
 
 describe('API ROUTES', () => {
   it('/api/v1/makes should return all makes', (done) => {
@@ -14,15 +26,11 @@ describe('API ROUTES', () => {
         response.should.have.status(200);
         response.should.be.json;
         response.body.should.be.a('array');
-        response.body.length.should.equal(4);
+        response.body.length.should.equal(3);
         response.body[0].should.have.property('make_name');
         response.body[0].make_name.should.equal('ferrari');
         response.body[0].should.have.property('manufacturer');
         response.body[0].manufacturer.should.equal('ferrari');
-        response.body[0].should.have.property('created_at');
-        response.body[0].created_at.should.equal('2018-10-09T14:35:15.492Z');
-        response.body[0].should.have.property('updated_at');
-        response.body[0].updated_at.should.equal('2018-10-09T14:35:15.492Z');
         done();
       });
 
@@ -62,9 +70,6 @@ describe('API ROUTES', () => {
         response.body[0].should.have.property('transmission');
         response.body[0].transmission.should.equal('7-speed automatic');
         response.body[0].should.have.property('make_id');
-        response.body[0].created_at.should.equal('2018-10-09T14:35:15.507Z');
-        response.body[0].should.have.property('updated_at');
-        response.body[0].updated_at.should.equal('2018-10-09T14:35:15.507Z');
         done();
       });
   });
