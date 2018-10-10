@@ -33,22 +33,21 @@ describe('API ROUTES', () => {
         response.body[0].manufacturer.should.equal('ferrari');
         done();
       });
-    });
+  });
 
-    it('POST /api/v1/makes HAPPY', (done) => {
-      chai.request(server)
-        .post('/api/v1/makes')
-        .send({
-          make_name: 'Cadillac',
-          manufacturer: 'GMC',
-        })
-        .end((err, response) => {
-          response.should.have.status(201);
-          response.should.be.json;
-          response.body.should.have.property('id');
-          done();
-        });
-    });
+  it('POST /api/v1/makes HAPPY', (done) => {
+    chai.request(server)
+      .post('/api/v1/makes')
+      .send({
+        make_name: 'Cadillac',
+        manufacturer: 'GMC',
+      })
+      .end((err, response) => {
+        response.should.have.status(201);
+        response.should.be.json;
+        response.body.should.have.property('id');
+        done();
+      });
   });
 
   it('/api/v1/models should return all models', (done) => {
