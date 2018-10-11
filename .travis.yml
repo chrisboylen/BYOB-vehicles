@@ -1,9 +1,15 @@
 language: node_js
 node_js:
-  - "9"
+- '9'
 services:
-  - postgresql
+- postgresql
 before_script:
-  - psql -c 'create database byob_vehicles_test;' -U postgres
+- psql -c 'create database byob_vehicles_test;' -U postgres
 notifications:
   email: false
+deploy:
+  provider: heroku
+  api_key:
+    secure: RU4899wcCpJTR6sRkAsHZLE1Bjdjb4R1/YnoAHiqWDHgKYE65UHscgBEXNPBUOuZRD3GkdzA7lqoCwYAwQBP6auj1maKZOdruWbJ+cg0Po4F49TtTOW422cYkQbEKEIyPUiUrD5RIkl1EtiOhE06z03ArSdoc3BCfE8Pc7ljTh8oRQGO27Nfbo2aTobQh0sUuU4UMpmM2aKDgAFejhHB4k/msqBnT8AwNNhtAYDLdzH7nOx3+M0zigX9G38Fb8K943nWrsZ+msDSI2buoA4h5aAz+Dr5BhZj/2831C7PpvAGyyr9Uj4rqEf7NHcY1QYxsAeqS+Wf2uZ8WM20fVMO/J5w8GU5QOhyeKyvhzxEwOIbYP6ohuuZ7uOLl6IH+iq+8PRl9eVqr1mcylQ4hfnl4Q/k+ALK/eXWrNy9T0VPVTN9Vsgku0Bhefhqxln0rISePLi/z9XNnaWDnchOBgBeU2H9iozjSi+xW7inWpMFRf+r9xAy+mSZPBRoZ+3YSb0v2REhXmzbOiywyy+kGkuM2ngISOmBhup1cyvNsa8RWbdwUr4CgxM85CXQXzjeHrWSJYAWRifzbuCF1N50V/62n3WCgxc9OUxikzc+QgmDUt7EkTGRhfCLqePv2mEWulGugPEfIqmArMJnvGHlY7jsOONEvphDrz/sZb+KuryE3io=
+  app: car-api-cj
+  skip_cleanup: true
