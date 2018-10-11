@@ -145,6 +145,21 @@ app.patch('/api/v1/makes/:id', (request, response) => {
     });
 });
 
+app.patch('/api/v1/models/:id', (request, response) => {
+  database('models').where('id', request.params.id).update(request.body)
+    .then((updated) => {
+      if (!updated) {
+        return response.status(422).json({
+          error: 'Please prove a valid model id.',
+        });
+      }
+      return response.status(201).json(updated);
+    })
+    .catch((error) => {
+      response.status(500).json({ error: 'Internal server error!' });
+    });
+});
+
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`);
 });
