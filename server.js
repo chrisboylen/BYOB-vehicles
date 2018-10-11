@@ -23,7 +23,7 @@ app.get('/api/v1/makes', (request, response) => {
       response.status(200).json(makes);
     })
     .catch((error) => {
-      response.status(500).json({ error });
+      response.status(500).json({ error: 'Internal server error!' });
     });
 });
 
@@ -33,9 +33,7 @@ app.get('/api/v1/models', (request, response) => {
       response.status(200).json(models);
     })
     .catch((error) => {
-      response.status(500).json({
-        error,
-      });
+      response.status(500).json({ error: 'Internal server error!' });
     });
 });
 
@@ -51,9 +49,23 @@ app.get('/api/v1/makes/:id', (request, response) => {
       }
     })
     .catch((error) => {
-      response.status(500).json({
-        error,
-      });
+      response.status(500).json({ error: 'Internal server error!' });
+    });
+});
+
+app.get('/api/v1/models/:id', (request, response) => {
+  database('models').where('id', request.params.id).select()
+    .then((models) => {
+      if (models.length) {
+        response.status(200).json(models);
+      } else {
+        response.status(404).json({
+          error: `Could not find make with id ${request.params.id}`,
+        });
+      }
+    })
+    .catch((error) => {
+      response.status(500).json({ error: 'Internal server error!' });
     });
 });
 
