@@ -160,6 +160,32 @@ app.patch('/api/v1/models/:id', (request, response) => {
     });
 });
 
+app.delete('/api/v1/makes/:id', (request, response) => {
+  database('makes').where('id', request.params.id).del()
+    .then((foundMake) => {
+      if (!foundMake) {
+        return response.status(422).json({ error: 'This make does not exist!' });
+      }
+      return response.sendStatus(204);
+    })
+    .catch((error) => {
+      response.status(500).json({ error: 'Internal server error!' });
+    });
+});
+
+app.delete('/api/v1/models/:id', (request, response) => {
+  database('models').where('id', request.params.id).del()
+    .then((foundModel) => {
+      if (!foundModel) {
+        return response.status(422).json({ error: 'This model does not exist!' });
+      }
+      return response.sendStatus(204);
+    })
+    .catch((error) => {
+      response.status(500).json({ error: 'Internal server error!' });
+    });
+});
+
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`);
 });
