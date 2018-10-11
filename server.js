@@ -39,6 +39,24 @@ app.get('/api/v1/models', (request, response) => {
     });
 });
 
+app.get('/api/v1/makes/:id', (request, response) => {
+  database('makes').where('id', request.params.id).select()
+    .then((makes) => {
+      if (makes.length) {
+        response.status(200).json(makes);
+      } else {
+        response.status(404).json({
+          error: `Could not find make with id ${request.params.id}`,
+        });
+      }
+    })
+    .catch((error) => {
+      response.status(500).json({
+        error,
+      });
+    });
+});
+
 app.post('/api/v1/makes', (request, response) => {
   const { make_name, manufacturer } = request.body;
   const make = {
