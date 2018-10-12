@@ -43,9 +43,7 @@ app.get('/api/v1/makes/:id', (request, response) => {
       if (makes.length) {
         response.status(200).json(makes);
       } else {
-        response.status(404).json({
-          error: `Could not find make with id ${request.params.id}`,
-        });
+        response.status(404).json({ error: `Could not find make with id ${request.params.id}` });
       }
     })
     .catch((error) => {
@@ -59,9 +57,7 @@ app.get('/api/v1/models/:id', (request, response) => {
       if (models.length) {
         response.status(200).json(models);
       } else {
-        response.status(404).json({
-          error: `Could not find make with id ${request.params.id}`,
-        });
+        response.status(404).json({ error: `Could not find model with id ${request.params.id}` });
       }
     })
     .catch((error) => {
@@ -134,11 +130,9 @@ app.patch('/api/v1/makes/:id', (request, response) => {
   database('makes').where('id', request.params.id).update(request.body)
     .then((updated) => {
       if (!updated) {
-        return response.status(422).json({
-          error: 'Please prove a valid make id.',
-        });
+        return response.status(422).json({ error: 'Please prove a valid make id.' });
       }
-      return response.status(201).json(updated);
+      return response.sendStatus(204);
     })
     .catch((error) => {
       response.status(500).json({ error: 'Internal server error!' });
@@ -149,11 +143,9 @@ app.patch('/api/v1/models/:id', (request, response) => {
   database('models').where('id', request.params.id).update(request.body)
     .then((updated) => {
       if (!updated) {
-        return response.status(422).json({
-          error: 'Please prove a valid model id.',
-        });
+        return response.status(422).json({ error: 'Please prove a valid model id.' });
       }
-      return response.status(201).json(updated);
+      return response.sendStatus(204);
     })
     .catch((error) => {
       response.status(500).json({ error: 'Internal server error!' });
