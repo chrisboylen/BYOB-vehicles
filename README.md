@@ -3,12 +3,12 @@
 [![Build Status](https://travis-ci.org/chrisboylen/BYOB-vehicles.svg?branch=master)](https://travis-ci.org/chrisboylen/BYOB-vehicles)
 
 ## Table of Contents
-  * [Makes](#makes)
+  * [Makes Endpoints](#makes)
     * [GET - All Makes](#get-all-makes)
     * [GET - Individual Make](#get-individual-make)
     * [POST - New Make](#post-new-make)
     * [PATCH - Individual Make](#patch-individual-make)
-  * [Models](#models)
+  * [Models Endpoints](#models)
     * [GET - All Models](#get-all-mmodels)
     * [GET - Individual Model](#get-individual-model)
     * [POST - New Model](#post-new-model)
