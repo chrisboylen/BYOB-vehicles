@@ -16,6 +16,7 @@
     * [PATCH - Individual Model](#patch-individual-make)
 
 ## Endpoints
+  * All responses are in JSON format
 ## Makes
 
 ### GET All Makes 
