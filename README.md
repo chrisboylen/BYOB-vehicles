@@ -17,6 +17,7 @@
 
 ## Endpoints
   * All responses are in JSON format
+:oncoming_automobile: 
 ## Makes
 
 ### GET All Makes 
@@ -86,6 +87,7 @@
     * Status: 422 Unprocessable Entity
     * `{ error: 'Please prove a valid make id.' }`
 
+:blue_car: 
 ## Models
 
 ### GET All Models 
