@@ -22,9 +22,23 @@ app.get('/api/v1/makes', (request, response) => {
 });
 
 app.get('/api/v1/models', (request, response) => {
-  database('models').select()
-    .then(models => response.status(200).json(models))
-    .catch(error => response.status(500).json({ error: 'Internal server error!' }));
+  if (request.query.model_name) {
+    const modelName = request.query.model_name;
+
+    database('models').where('model_name', modelName).select()
+      .then((models) => {
+        if (!models.length) {
+          return response.status(404).json({
+            error: `${modelName} doesn't exist!`,
+          });
+        }
+        return response.status(200).json(models);
+      });
+  } else {
+    database('models').select()
+      .then(models => response.status(200).json(models))
+      .catch(error => response.status(500).json({ error: 'Internal server error!' }));
+  }
 });
 
 app.get('/api/v1/makes/:id', (request, response) => {
