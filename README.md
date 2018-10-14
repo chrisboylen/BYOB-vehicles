@@ -2,12 +2,23 @@
 
 [![Build Status](https://travis-ci.org/chrisboylen/BYOB-vehicles.svg?branch=master)](https://travis-ci.org/chrisboylen/BYOB-vehicles)
 
+## Table of Contents
+  * [Makes Endpoints](#makes)
+    * [GET - All Makes](#get-all-makes)
+    * [GET - Individual Make](#get-individual-make)
+    * [POST - New Make](#post-new-make)
+    * [PATCH - Individual Make](#patch-individual-make)
+  * [Models Endpoints](#models)
+    * [GET - All Models](#get-all-mmodels)
+    * [GET - Individual Model](#get-individual-model)
+    * [POST - New Model](#post-new-model)
+    * [PATCH - Individual Model](#patch-individual-make)
 
 ## Endpoints
-
 ## Makes
 
-* ### GET - All Makes - `/api/v1/makes`
+### GET All Makes 
+* `/api/v1/makes` 
 
   This endpoint will return an array with all the makes in the database. - ex: 
     * Status: 200 ok
@@ -26,7 +37,8 @@
         "updated_at": "2018-10-10T22:54:25.599Z"
     }]`
 
-* ### GET - Individual Make - `/api/v1/makes/:id`
+### GET Individual Make 
+* `/api/v1/makes/:id`
  
   To get an individual make you need to send in the make ID through the params. This will return an array with the make object of the matching the id. - ex:
     * Status 200 ok
@@ -42,7 +54,8 @@
     * Status: 404 not found 
     * `{  error: 'Could not find make with id 10.' }`
 
-* ### POST - New Make - `/api/v1/makes`
+### POST New Make  
+* `/api/v1/makes`
  
   To add an individual make, you need to send in the new make_name and manufacturer through the body object. This will insert the new make into the database and return an object with the new make id. - ex:
     * Status: 201 created
@@ -61,7 +74,8 @@
     * Status: 422 Unprocessable Entity
     * `{ error: 'This make does not exist!' }`
 
-* ### PATCH - Individual Make - `/api/v1/makes/:id`
+### PATCH Individual Make 
+* `/api/v1/makes/:id`
 
   To edit an individual make you need to send in make_name or manufacturer through the body object and the make ID through the params. This will return nothing. - ex:
     * Status: 204 No Content
@@ -72,7 +86,8 @@
 
 ## Models
 
-* ### GET - All Models `/api/v1/models`
+### GET All Models 
+* `/api/v1/models`
 
   This endpoint will return an array with all the models in the database. - ex:
     * Status 200 Ok
@@ -101,7 +116,8 @@
         "updated_at": "2018-10-10T22:54:25.614Z"
     }]`
 
-* ### GET - Individual Model - `/api/v1/models/:id`
+### GET Individual Model  
+* `/api/v1/models/:id`
  
   To get an individual model you need to send in the model ID through the params. This will return an array with the model object of the matching the id. - ex:
     * Status 200 Ok
@@ -117,7 +133,8 @@
     * Status 404
     * `{ error: 'Could not find model with id 789.' }`
 
-* ### POST - New model - `/api/v1/models`
+### POST New model 
+* `/api/v1/models`
  
   To add an individual model you need to send in the model_name,
     body, engine, top_speed, horse_power, transmission and make_id through the body object. This will insert the new model into the database and return an object with the new model id. - ex:
@@ -128,7 +145,8 @@
       * Status: 422 Unprocessable Entity
       * `{ error: 'Expected format: { model_name: <String>, body: <String>, engine: <String>, top_speed: <Integer>, horse_power: <Integer>, transmission: <String>, make_id: <Integer> }. You're missing a horse_power property.' }`
 
-* ### DELETE - Individual model - `/api/v1/models/:id`
+### DELETE Individual model
+*  `/api/v1/models/:id`
  
   To delete an individual model you need to send in the model ID through the params. This will return nothing. - ex:
     * Status: 204 No Content
@@ -137,7 +155,8 @@
     * Status: 422 Unprocessable Entity
     * `{ error: 'This model does not exist!' }`
 
-* ### PATCH - Individual Model - `/api/v1/models/:id`
+### PATCH Individual Model
+* `/api/v1/models/:id`
 
   To edit an individual model you need to send in all or any of model_name, body, engine, top_speed, horse_power, transmission, make_id through the body object and the model ID through the params. This will return nothing. - ex:
     * Status: 204 No Content
