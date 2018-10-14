@@ -6,7 +6,6 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 
-
 describe('API ROUTES', () => {
   beforeEach((done) => {
     database.migrate.rollback()
@@ -128,12 +127,122 @@ describe('API ROUTES', () => {
     });
   });
 
-  describe('PUTS', () => {
+  describe('PATCH', () => {
+    it('PATCH /api/v1/makes/:id HAPPY', (done) => {
+      const firstMake = 1;
+      chai.request(app)
+        .patch(`/api/v1/makes/${firstMake}`)
+        .send({
+          make_name: 'Ford',
+        })
+        .end((err, response) => {
+          response.should.have.status(204);
+          done();
+        });
+    });
 
+    it('PATCH /api/v1/makes/:id SAD', (done) => {
+      const notAMake = 55;
+      chai.request(app)
+        .patch(`/api/v1/makes/${notAMake}`)
+        .send({
+          make_name: 'Ford',
+        })
+        .end((err, response) => {
+          response.should.have.status(422);
+          done();
+        });
+    });
+
+    it('PATCH /api/v1/makes/:id VERY SAD', (done) => {
+      const firstMAke = 1;
+      chai.request(app)
+        .patch(`/api/v1/makes/${firstMAke}`)
+        .send()
+        .end((err, response) => {
+          response.should.have.status(500);
+          done();
+        });
+    });
+
+    it('PATCH /api/v1/models/:id HAPPY', (done) => {
+      const firstModel = 1;
+      chai.request(app)
+        .patch(`/api/v1/models/${firstModel}`)
+        .send({
+          top_speed: 123,
+        })
+        .end((err, response) => {
+          response.should.have.status(204);
+          done();
+        });
+    });
+
+    it('PATCH /api/v1/models/:id SAD', (done) => {
+      const notAModel = 1234234;
+      chai.request(app)
+        .patch(`/api/v1/models/${notAModel}`)
+        .send({
+          top_speed: 234,
+        })
+        .end((err, response) => {
+          response.should.have.status(422);
+          done();
+        });
+    });
+
+    it('PATCH /api/v1/models/:id VERY SAD', (done) => {
+      const firstModel = 1;
+      chai.request(app)
+        .patch(`/api/v1/models/${firstModel}`)
+        .send()
+        .end((err, response) => {
+          response.should.have.status(500);
+          done();
+        });
+    });
   });
 
   describe('DELETE', () => {
+    it('DELETE /api/v1/makes/:id HAPPY', (done) => {
+      const firstMake = 1;
+      chai.request(app)
+        .delete(`/api/v1/makes/${firstMake}`)
+        .end((err, response) => {
+          response.should.have.status(204);
+          done();
+        });
+    });
 
+    it('DELETE /api/v1/makes/:id SAD', (done) => {
+      const notAMake = 1234234;
+      chai.request(app)
+        .delete(`/api/v1/makes/${notAMake}`)
+        .end((err, response) => {
+          response.should.have.status(422);
+          done();
+        });
+    });
+
+    it('DELETE /api/v1/models/:id HAPPY', (done) => {
+      const firstModel = 1;
+      chai.request(app)
+        .delete(`/api/v1/models/${firstModel}`)
+        .end((err, response) => {
+          response.should.have.status(204);
+          done();
+        });
+    });
+
+    it('DELETE /api/v1/models/:id SAD', (done) => {
+      const notAModel = 1234234;
+      chai.request(app)
+        .delete(`/api/v1/models/${notAModel}`)
+        .end((err, response) => {
+          response.should.have.status(422);
+          done();
+        });
+    });
   });
 });
 
