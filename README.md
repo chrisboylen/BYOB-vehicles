@@ -10,6 +10,7 @@
     * [PATCH - Individual Make](#patch-individual-make)
   * [Models Endpoints](#models)
     * [GET - All Models](#get-all-mmodels)
+    * [GET - Model Search by Name](#get-model-search-by-name)
     * [GET - Individual Model](#get-individual-model)
     * [POST - New Model](#post-new-model)
     * [PATCH - Individual Model](#patch-individual-make)
@@ -40,7 +41,7 @@
 ### GET Individual Make 
 * `/api/v1/makes/:id`
  
-  To get an individual make you need to send in the make ID through the params. This will return an array with the make object of the matching the id. - ex:
+  To get an individual make you need to send in the make ID through the params. This will return an array with the make object of the matching make id. - ex:
     * Status 200 ok
     * `[{
       "id": 2,
@@ -89,7 +90,7 @@
 ### GET All Models 
 * `/api/v1/models`
 
-  This endpoint will return an array with all the models in the database. - ex:
+  This endpoint will return an array with all the models in the database.  - ex:
     * Status 200 Ok
     * `[{
         "id": 2,
@@ -116,10 +117,28 @@
         "updated_at": "2018-10-10T22:54:25.614Z"
     }]`
 
+### GET Model Search by Name
+* `localhost:3000/api/v1/models?model_name=458 Italia`
+
+  To return specific model searched by model_name, you need to send the model_name through the params. This will return an array with the model object of the matching model_name.
+    * Status 200 Ok
+    * `[{
+        "id": 1,
+        "model_name": "458 Italia",
+        "body": "Coupe",
+        "engine": "8",
+        "top_speed": 366,
+        "horse_power": 578,
+        "transmission": "7-speed automatic",
+        "make_id": 1,
+        "created_at": "2018-10-10T22:54:25.604Z",
+        "updated_at": "2018-10-10T22:54:25.604Z"
+    }]`
+
 ### GET Individual Model  
 * `/api/v1/models/:id`
  
-  To get an individual model you need to send in the model ID through the params. This will return an array with the model object of the matching the id. - ex:
+  To get an individual model you need to send in the model ID through the params. This will return an array with the model object of the matching model id. - ex:
     * Status 200 Ok
     * `[{
         "id": 1,
