@@ -10,7 +10,7 @@ const database = require('knex')(configuration);
 app.use(bodyParser.json());
 app.use(express.static('public/'));
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3010);
 app.locals.title = 'BYOB Vehicles';
 
 app.get('/', (request, response) => response.send('Server working'));
