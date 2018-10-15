@@ -13,18 +13,12 @@ app.use(express.static('public/'));
 app.set('port', process.env.PORT || 3000);
 app.locals.title = 'BYOB Vehicles';
 
-app.get('/', (request, response) => {
-  response.send('Server working');
-});
+app.get('/', (request, response) => response.send('Server working'));
 
 app.get('/api/v1/makes', (request, response) => {
   database('makes').select()
-    .then((makes) => {
-      response.status(200).json(makes);
-    })
-    .catch((error) => {
-      response.status(500).json({ error: 'Internal server error!' });
-    });
+    .then(makes => response.status(200).json(makes))
+    .catch(error => response.status(500).json({ error: 'Internal server error!' }));
 });
 
 app.get('/api/v1/models', (request, response) => {
@@ -42,12 +36,8 @@ app.get('/api/v1/models', (request, response) => {
       });
   } else {
     database('models').select()
-      .then((models) => {
-        response.status(200).json(models);
-      })
-      .catch((error) => {
-        response.status(500).json({ error: 'Internal server error!' });
-      });
+      .then(models => response.status(200).json(models))
+      .catch(error => response.status(500).json({ error: 'Internal server error!' }));
   }
 });
 
@@ -55,28 +45,22 @@ app.get('/api/v1/makes/:id', (request, response) => {
   database('makes').where('id', request.params.id).select()
     .then((makes) => {
       if (makes.length) {
-        response.status(200).json(makes);
-      } else {
-        response.status(404).json({ error: `Could not find make with id ${request.params.id}` });
+        return response.status(200).json(makes);
       }
+      return response.status(404).json({ error: `Could not find make with id ${request.params.id}` });
     })
-    .catch((error) => {
-      response.status(500).json({ error: 'Internal server error!' });
-    });
+    .catch(error => response.status(500).json({ error: 'Internal server error!' }));
 });
 
 app.get('/api/v1/models/:id', (request, response) => {
   database('models').where('id', request.params.id).select()
     .then((models) => {
       if (models.length) {
-        response.status(200).json(models);
-      } else {
-        response.status(404).json({ error: `Could not find model with id ${request.params.id}` });
+        return response.status(200).json(models);
       }
+      return response.status(404).json({ error: `Could not find model with id ${request.params.id}` });
     })
-    .catch((error) => {
-      response.status(500).json({ error: 'Internal server error!' });
-    });
+    .catch(error => response.status(500).json({ error: 'Internal server error!' }));
 });
 
 app.post('/api/v1/makes', (request, response) => {
@@ -95,12 +79,8 @@ app.post('/api/v1/makes', (request, response) => {
   }
 
   database('makes').insert(make, 'id')
-    .then((make) => {
-      response.status(201).json({ id: make[0] });
-    })
-    .catch((error) => {
-      response.status(500).json({ error: 'Internal server error!' });
-    });
+    .then(make => response.status(201).json({ id: make[0] }))
+    .catch(error => response.status(500).json({ error: 'Internal server error!' }));
 });
 
 app.post('/api/v1/models', (request, response) => {
@@ -132,12 +112,8 @@ app.post('/api/v1/models', (request, response) => {
   }
 
   database('models').insert(model, 'id')
-    .then((model) => {
-      response.status(201).json({ id: model[0] });
-    })
-    .catch((error) => {
-      response.status(500).json({ error: 'Internal server error!' });
-    });
+    .then(model => response.status(201).json({ id: model[0] }))
+    .catch(error => response.status(500).json({ error: 'Internal server error!' }));
 });
 
 app.patch('/api/v1/makes/:id', (request, response) => {
@@ -148,9 +124,7 @@ app.patch('/api/v1/makes/:id', (request, response) => {
       }
       return response.sendStatus(204);
     })
-    .catch((error) => {
-      response.status(500).json({ error: 'Internal server error!' });
-    });
+    .catch(error => response.status(500).json({ error: 'Internal server error!' }));
 });
 
 app.patch('/api/v1/models/:id', (request, response) => {
@@ -161,9 +135,7 @@ app.patch('/api/v1/models/:id', (request, response) => {
       }
       return response.sendStatus(204);
     })
-    .catch((error) => {
-      response.status(500).json({ error: 'Internal server error!' });
-    });
+    .catch(error => response.status(500).json({ error: 'Internal server error!' }));
 });
 
 app.delete('/api/v1/makes/:id', (request, response) => {
@@ -174,9 +146,7 @@ app.delete('/api/v1/makes/:id', (request, response) => {
       }
       return response.sendStatus(204);
     })
-    .catch((error) => {
-      response.status(500).json({ error: 'Internal server error!' });
-    });
+    .catch(error => response.status(500).json({ error: 'Internal server error!' }));
 });
 
 app.delete('/api/v1/models/:id', (request, response) => {
@@ -187,13 +157,9 @@ app.delete('/api/v1/models/:id', (request, response) => {
       }
       return response.sendStatus(204);
     })
-    .catch((error) => {
-      response.status(500).json({ error: 'Internal server error!' });
-    });
+    .catch(error => response.status(500).json({ error: 'Internal server error!' }));
 });
 
-app.listen(app.get('port'), () => {
-  console.log(`${app.locals.title} is running on ${app.get('port')}.`);
-});
+app.listen(app.get('port'), () => console.log(`${app.locals.title} is running on ${app.get('port')}.`));
 
 module.exports = { app, database };
