@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 
 const app = express();
 const bodyParser = require('body-parser');
@@ -9,11 +10,12 @@ const database = require('knex')(configuration);
 
 app.use(bodyParser.json());
 app.use(express.static('public/'));
+app.use(cors());
 
 app.set('port', process.env.PORT || 3010);
 app.locals.title = 'BYOB Vehicles';
 
-app.get('/', (request, response) => response.send('Server working'));
+app.get('/', (request, response) => response.status(200).json('Server working'));
 
 app.get('/api/v1/makes', (request, response) => {
   database('makes').select()
