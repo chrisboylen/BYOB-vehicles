@@ -252,7 +252,7 @@ describe('CLIENTS ROUTES', () => {
       .get('/')
       .end((err, response) => {
         response.should.have.status(200);
-        response.should.be.html;
+        response.should.be.json;
         done();
       });
   });
