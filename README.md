@@ -17,9 +17,32 @@
     * [DELETE - A Model](#delete-modle)
     * [PATCH - Individual Model](#patch-individual-make)
 
+## Getting Started
+This is a general guide to open BYOB on your local machine. Run the following in your terminal. You will already need to have npm and postgreSQL installed and have this repo forked to your github. If you are interested in contributing to the this project please checkout the [CONTRIBUTING][CONTRIBUTING].
+
+[CONTRIBUTING]:
+https://github.com/chrisboylen/BYOB-vehicles
+
+* git clone https://github.com/chrisboylen/BYOB-vehicles.git
+* cd BYOB-vehicles
+* npm i
+* node server.js
+
+## Dependencies
+* body parser 1.18.3
+* cors 2.8.4
+* express 4.16.3
+* knex 0.15.2
+* pg 7.5.0
+* eslint 5.6.1
+* chai-http 4.2.0
+* chai 4.2.0
+* mocha 5.2.0
+
 ## Endpoints
 * All responses are in JSON format
 :oncoming_automobile:
+
 ## Makes
 
 ### GET All Makes 
