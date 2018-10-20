@@ -23,10 +23,34 @@ This is a general guide to open BYOB on your local machine. Run the following in
 [CONTRIBUTING]:
 https://github.com/chrisboylen/BYOB-vehicles
 
+### Initial setup
 * git clone https://github.com/chrisboylen/BYOB-vehicles.git
 * cd BYOB-vehicles
 * npm i
 * node server.js
+### Create Database with data
+psql is a terminal-based front-end to PostgreSQL. While you are running it locally you be able to create new databases as well as accessing, editing and deleting existing ones. We access the PostgreSQL by running this command.
+* Run `CREATE DATABASE [database name]` in your terminal
+
+We have now initialized our database.
+
+* Create a new directory, cd into it, and run `npm initial --yes`
+
+This creates our local directory. We still need Knex with Express to allow us to use Javascript for communicating with the backend.
+
+* Run the following commands in your terminal...
+    * `npm i -g knex`
+    * `npm i -S knex pg`
+
+Now that we have knex installed we need to configure our database.
+
+* Run knex init in your terminal
+
+This is the file that you will use to configure your database. You will notice some boilerplate setup, but with some modifications you can better accommodate your project.
+
+* Run knex migrate:make initial in your terminal
+
+This will generate an initial migration. You can edit this newly created file to better suit your schema layout. Use the command `knex migrate:latest` to run all of your migrations. For future adjustments to your schema, rather than continuing to edit the initial migration, you must create a new migration with the following command, `knex migrate:make [adjustment detail]`. Editing past migration can cause errors! Further documentation on building out tables can be found [here](https://knexjs.org/).
 
 ## Dependencies
 * body parser 1.18.3
