@@ -17,11 +17,11 @@ app.locals.title = 'BYOB Vehicles';
 
 app.get('/', (request, response) => response.status(200).json('Server working'));
 
-app.get('/api/v1/makes', (request, response) => {
-  database('makes').select()
-    .then(makes => response.status(200).json(makes))
-    .catch(error => response.status(500).json({ error: 'Internal server error!' }));
-});
+// app.get('/api/v1/makes', (request, response) => {
+//   database('makes').select()
+//     .then(makes => response.status(200).json(makes))
+//     .catch(error => response.status(500).json({ error: 'Internal server error!' }));
+// });
 
 app.get('/api/v1/models', (request, response) => {
   if (request.query.model_name) {
@@ -42,6 +42,27 @@ app.get('/api/v1/models', (request, response) => {
       .catch(error => response.status(500).json({ error: 'Internal server error!' }));
   }
 });
+
+app.get('/api/v1/makes', (request, response) => {
+  if (request.query.make_name) {
+    const makeName = request.query.make_name;
+
+    database('makes').where('make_name', makeName).select()
+      .then((makes) => {
+        if (!makes.length) {
+          return response.status(404).json({
+            error: `${makeName} doesn't exist!`,
+          });
+        }
+        return response.status(200).json(makes);
+      });
+  } else {
+    database('makes').select()
+      .then(makes => response.status(200).json(makes))
+      .catch(error => response.status(500).json({ error: 'Internal server error!' }));
+  }
+});
+
 
 app.get('/api/v1/makes/:id', (request, response) => {
   database('makes').where('id', request.params.id).select()
